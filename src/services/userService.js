@@ -13,6 +13,17 @@ const postUser = async (body) => {
   return { type: 201, data: { token: tokenGenerate({ email }) } };
 };
 
+const getUsers = async () => {
+  const allUsers = await User.findAll();
+  allUsers.map((user) => {
+    const newUser = user;
+    newUser.password = undefined;
+    return newUser;
+  });
+  return { type: 200, data: allUsers };
+};
+
 module.exports = { 
   postUser,
+  getUsers,
 };
