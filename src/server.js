@@ -4,7 +4,7 @@ const app = require('./app');
 const loginControler = require('./controllers/loginController');
 const userControler = require('./controllers/userController');
 const authLogin = require('./middlewares/validateLogin');
-const { authName, authEmail, authPassword} = require('./middlewares/validateUser');
+const { authName, authEmail, authPassword } = require('./middlewares/validateUser');
 
 // não remova a variável `API_PORT` ou o `listen`
 const port = process.env.API_PORT || 3000;
