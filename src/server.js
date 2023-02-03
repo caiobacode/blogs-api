@@ -29,4 +29,6 @@ app.get('/user/:id', authToken, userControler.getUserById);
 
 app.post('/categories', authToken, authCategoryName, categoryControler.postCategory);
 
+app.get('/categories', authToken, categoryControler.getCategories);
+
 app.listen(port, () => console.log('ouvindo porta', port));
