@@ -21,4 +21,6 @@ app.post('/user', authName, authEmail, authPassword, userControler.postUser);
 
 app.get('/user', authToken, userControler.getUsers);
 
+app.get('/user/:id', authToken, userControler.getUserById);
+
 app.listen(port, () => console.log('ouvindo porta', port));

@@ -23,7 +23,18 @@ const getUsers = async () => {
   return { type: 200, data: allUsers };
 };
 
+const getUserById = async (id) => {
+  const allUsers = await User.findAll();
+  const oneUser = allUsers.find((u) => u.id === Number(id));
+  
+  if (!oneUser) return { type: 404, data: { message: 'User does not exist' } };
+  
+  oneUser.password = undefined;
+  return { type: 200, data: oneUser };
+};
+
 module.exports = { 
   postUser,
   getUsers,
+  getUserById,
 };
