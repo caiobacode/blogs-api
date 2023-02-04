@@ -11,6 +11,8 @@ const { authName, authEmail, authPassword } = require('./middlewares/validateUse
 const categoryControler = require('./controllers/categoryController');
 const { authCategoryName } = require('./middlewares/validateCategory');
 
+const postsController = require('./controllers/postsController');
+
 // não remova a variável `API_PORT` ou o `listen`
 const port = process.env.API_PORT || 3000;
 
@@ -30,5 +32,7 @@ app.get('/user/:id', authToken, userControler.getUserById);
 app.post('/categories', authToken, authCategoryName, categoryControler.postCategory);
 
 app.get('/categories', authToken, categoryControler.getCategories);
+
+app.get('/post', authToken, postsController.getPosts);
 
 app.listen(port, () => console.log('ouvindo porta', port));
