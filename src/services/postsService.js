@@ -4,31 +4,36 @@ const { PostCategory } = require('../models');
 const { Category } = require('../models');
 
 const getPosts = async () => {
-  const allPosts = await BlogPost.findAll();
-  const allUsers = await User.findAll();
-  const allPostCategory = await PostCategory.findAll();
-  const allCategory = await Category.findAll();
-  const newAllPosts = allPosts.map((p) => {
-    const actualUser = allUsers.find((u) => u.dataValues.id === Number(p.dataValues.userId));
-    const actualPostCategory = allPostCategory
-    .find((c) => c.dataValues.postId === Number(p.dataValues.userId));
+  // I placed .then(...) to no more need to get "dataValues" from an sequelize result, (0 === 'dataValues')
+  const allPosts = await BlogPost.findAll().then((r) => r.map((s) => Object.values(s)[0]));
+  const allUsers = await User.findAll().then((r) => r.map((s) => Object.values(s)[0]));
+  const postCategory = await PostCategory.findAll().then((r) => r.map((s) => Object.values(s)[0]));
+  const allCategories = await Category.findAll().then((r) => r.map((s) => Object.values(s)[0]));
 
-    const actualCategories = allCategory
-    .filter((c) => c.dataValues.id === actualPostCategory.dataValues.categoryId);
-    const newPost = {
-      ...p.dataValues,
-      user: { ...actualUser.dataValues, password: undefined },
-      categories: actualCategories,
+  const allPostsFormated = allPosts.map((p) => {
+    const actualUser = allUsers.find((u) => u.id === Number(p.userId));
+
+    const actualPostCategories = postCategory.find((c) => c.postId === Number(p.userId));
+    const categoriesArr = allCategories.filter((c) => c.id === actualPostCategories.categoryId);
+
+    const postFormated = {
+      ...p,
+      user: { ...actualUser, password: undefined },
+      categories: categoriesArr,
     };
-    return newPost;
+
+    return postFormated;
   });
-  return { type: 200, data: newAllPosts };
+
+  return { type: 200, data: allPostsFormated };
 };
 
 const getPostById = async (id) => {
   const { data: allPosts } = await getPosts();
-  const onePost = allPosts.find((p) => p.id === +id);
+  const onePost = allPosts.find((p) => p.id === Number(id));
+
   if (!onePost) return { type: 404, data: { message: 'Post does not exist' } };
+  
   return { type: 200, data: onePost };
 };
 
