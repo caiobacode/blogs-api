@@ -5,6 +5,13 @@ const getPosts = async (req, res) => {
   res.status(type).json(data);
 };
 
+const getPostById = async (req, res) => {
+  const { id } = req.params;
+  const { type, data } = await postsService.getPostById(id);
+  res.status(type).json(data);
+};
+
 module.exports = {
   getPosts,
+  getPostById,
 };

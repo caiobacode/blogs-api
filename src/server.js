@@ -35,4 +35,6 @@ app.get('/categories', authToken, categoryControler.getCategories);
 
 app.get('/post', authToken, postsController.getPosts);
 
+app.get('/post/:id', authToken, postsController.getPostById);
+
 app.listen(port, () => console.log('ouvindo porta', port));
