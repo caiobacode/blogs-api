@@ -17,8 +17,15 @@ const insertPost = async (req, res) => {
   res.status(type).json(data);
 };
 
+const updatePost = async (req, res) => {
+  const { body, user: { email }, params: { id } } = req;
+  const { type, data } = await postsService.updatePost(body, id, email);
+  res.status(type).json(data);
+};
+
 module.exports = {
   getPosts,
   getPostById,
   insertPost,
+  updatePost,
 };

@@ -17,4 +17,15 @@ const authPostContent = async (req, res, next) => {
   next();
 };
 
-module.exports = { authPostContent };
+const authNewPostContent = async (req, res, next) => {
+  const { title, content } = req.body;
+
+  const emptyMessage = { message: 'Some required fields are missing' };
+
+  if (!title) return res.status(400).json(emptyMessage);
+  if (!content) return res.status(400).json(emptyMessage);
+  
+  next();
+};
+
+module.exports = { authPostContent, authNewPostContent };

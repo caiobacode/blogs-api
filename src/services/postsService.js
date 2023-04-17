@@ -39,14 +39,31 @@ const insertPost = async (body, email) => {
 
   const postCreated = await BlogPost.create({ ...body, userId }).then((r) => r.dataValues);
   body.categoryIds.map(async (id) => { 
-    await PostCategory.create({ categoryId: id, postId: postCreated.id }); 
+    await PostCategory.create({ categoryId: id, postId: postCreated.id });
   });
 
   return { type: 201, data: postCreated };
+};
+
+const updatePost = async (body, id, email) => {
+  const { id: userId } = await User.findOne({ where: { email } }).then((r) => r.dataValues);
+  const { data: actualPost } = await getPostById(id);
+
+  if (actualPost.userId !== userId) return { type: 401, data: { message: 'Unauthorized user' } };
+
+  await BlogPost.update({ ...body }, { where: { id } });
+  const postUpdated = {
+    ...actualPost,
+    title: body.title,
+    content: body.content,
+  };
+
+  return { type: 200, data: postUpdated };
 };
 
 module.exports = {
   getPosts,
   getPostById,
   insertPost,
+  updatePost,
 };
