@@ -26,6 +26,8 @@ app.post('/login', authLogin, loginControler.login);
 
 app.post('/user', authName, authEmail, authPassword, userControler.postUser);
 
+app.delete('/user/me', authToken, userControler.deleteUser);
+
 app.get('/user', authToken, userControler.getUsers);
 
 app.get('/user/:id', authToken, userControler.getUserById);
