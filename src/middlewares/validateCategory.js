@@ -5,6 +5,4 @@ const authCategoryName = (req, res, next) => {
   next();
 };
 
-module.exports = {
-  authCategoryName,
-};
+module.exports = { authCategoryName };

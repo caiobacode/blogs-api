@@ -11,7 +11,14 @@ const getPostById = async (req, res) => {
   res.status(type).json(data);
 };
 
+const insertPost = async (req, res) => {
+  const { body, user: { email } } = req;
+  const { type, data } = await postsService.insertPost(body, email);
+  res.status(type).json(data);
+};
+
 module.exports = {
   getPosts,
   getPostById,
+  insertPost,
 };

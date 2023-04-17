@@ -1,7 +1,4 @@
-const { BlogPost } = require('../models');
-const { User } = require('../models');
-const { PostCategory } = require('../models');
-const { Category } = require('../models');
+const { BlogPost, User, PostCategory, Category } = require('../models');
 
 const getPosts = async () => {
   // I placed .then(...) to no more need to get "dataValues" from an sequelize result, (0 === 'dataValues')
@@ -37,7 +34,19 @@ const getPostById = async (id) => {
   return { type: 200, data: onePost };
 };
 
+const insertPost = async (body, email) => {
+  const { id: userId } = await User.findOne({ where: { email } }).then((r) => r.dataValues);
+
+  const postCreated = await BlogPost.create({ ...body, userId }).then((r) => r.dataValues);
+  body.categoryIds.map(async (id) => { 
+    await PostCategory.create({ categoryId: id, postId: postCreated.id }); 
+  });
+
+  return { type: 201, data: postCreated };
+};
+
 module.exports = {
   getPosts,
   getPostById,
+  insertPost,
 };

@@ -6,4 +6,4 @@ const authLogin = (req, res, next) => {
   next();
 };
 
-module.exports = authLogin;
+module.exports = { authLogin };

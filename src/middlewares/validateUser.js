@@ -25,8 +25,4 @@ const authPassword = (req, res, next) => {
   next();
 };
 
-module.exports = {
-  authName,
-  authEmail,
-  authPassword,
-};
+module.exports = { authName, authEmail, authPassword };
