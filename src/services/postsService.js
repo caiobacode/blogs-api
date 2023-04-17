@@ -45,20 +45,28 @@ const insertPost = async (body, email) => {
   return { type: 201, data: postCreated };
 };
 
-const updatePost = async (body, id, email) => {
+const updatePost = async ({ title, content }, id, email) => {
   const { id: userId } = await User.findOne({ where: { email } }).then((r) => r.dataValues);
   const { data: actualPost } = await getPostById(id);
 
   if (actualPost.userId !== userId) return { type: 401, data: { message: 'Unauthorized user' } };
 
-  await BlogPost.update({ ...body }, { where: { id } });
-  const postUpdated = {
-    ...actualPost,
-    title: body.title,
-    content: body.content,
-  };
+  await BlogPost.update({ title, content }, { where: { id } });
 
+  const postUpdated = { ...actualPost, title, content };
   return { type: 200, data: postUpdated };
+};
+
+const deletePost = async (id, email) => {
+  const { id: userId } = await User.findOne({ where: { email } }).then((r) => r.dataValues);
+  const actualPost = await BlogPost.findOne({ where: { id } });
+
+  if (!actualPost) return { type: 404, data: { message: 'Post does not exist' } };
+  if (actualPost.userId !== userId) return { type: 401, data: { message: 'Unauthorized user' } };
+
+  await BlogPost.destroy({ where: { id } });
+
+  return { type: 204, data: '' };
 };
 
 module.exports = {
@@ -66,4 +74,5 @@ module.exports = {
   getPostById,
   insertPost,
   updatePost,
+  deletePost,
 };

@@ -42,4 +42,6 @@ app.post('/post', authToken, authPostContent, postsController.insertPost);
 
 app.put('/post/:id', authToken, authNewPostContent, postsController.updatePost);
 
+app.delete('/post/:id', authToken, postsController.deletePost);
+
 app.listen(port, () => console.log('ouvindo porta', port));
