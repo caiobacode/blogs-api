@@ -11,6 +11,12 @@ const getPostById = async (req, res) => {
   res.status(type).json(data);
 };
 
+const getPostByTerm = async (req, res) => {
+  const query = Object.values(req.query);
+  const { type, data } = await postsService.getPostByTerm(query);
+  res.status(type).json(data);
+};
+
 const insertPost = async (req, res) => {
   const { body, user: { email } } = req;
   const { type, data } = await postsService.insertPost(body, email);
@@ -33,6 +39,7 @@ const deletePost = async (req, res) => {
 module.exports = {
   getPosts,
   getPostById,
+  getPostByTerm,
   insertPost,
   updatePost,
   deletePost,

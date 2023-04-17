@@ -10,7 +10,7 @@ const getPosts = async () => {
   const allPostsFormated = allPosts.map((p) => {
     const actualUser = allUsers.find((u) => u.id === Number(p.userId));
 
-    const actualPostCategories = postCategory.find((c) => c.postId === Number(p.userId));
+    const actualPostCategories = postCategory.find((c) => c.postId === Number(p.id));
     const categoriesArr = allCategories.filter((c) => c.id === actualPostCategories.categoryId);
 
     const postFormated = {
@@ -32,6 +32,13 @@ const getPostById = async (id) => {
   if (!onePost) return { type: 404, data: { message: 'Post does not exist' } };
   
   return { type: 200, data: onePost };
+};
+
+const getPostByTerm = async (term) => {
+  const { data: allPosts } = await getPosts();
+  const filterPosts = allPosts.filter((p) => p.title.includes(term) || p.content.includes(term));
+  
+  return { type: 200, data: filterPosts };
 };
 
 const insertPost = async (body, email) => {
@@ -72,6 +79,7 @@ const deletePost = async (id, email) => {
 module.exports = {
   getPosts,
   getPostById,
+  getPostByTerm,
   insertPost,
   updatePost,
   deletePost,

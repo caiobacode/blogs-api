@@ -38,6 +38,8 @@ app.post('/categories', authToken, authCategoryName, categoryControler.postCateg
 
 app.get('/post', authToken, postsController.getPosts);
 
+app.get('/post/search', authToken, postsController.getPostByTerm);
+
 app.get('/post/:id', authToken, postsController.getPostById);
 
 app.post('/post', authToken, authPostContent, postsController.insertPost);
