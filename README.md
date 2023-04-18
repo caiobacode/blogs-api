@@ -1,3 +1,5 @@
-# blogs-api
+<h1 align="center">📰  Blogs API  📷</h1>
 
-building README
+<div align='center'>
+<img width='300' alt="blogs-img" src="./blogs.jpg">
+</div>
