@@ -77,6 +77,8 @@ npm start
 <details>
     <summary><strong>🌐 API routes</strong></summary>
 
+<br/>
+    
 > <strong>User Route</strong><br/>
 - POST "/login" - Sign a user and return a JWT token.
 - GET "/user" - Returns all users.<br/>
@@ -84,10 +86,14 @@ npm start
 - POST "/user" - Register a new user with the properties passed by the request.<br/>
 - DELETE "/user/me" delete the own user that make this request<br/>
 
+<br/>
+    
 > <strong>Categories Route</strong><br/>
 + GET "/categories" - Returns all categories.<br/>
 + POST "/sales" - Register a category with the properties passed by the request.<br/>
 
+<br/>
+    
 > <strong>Posts Route</strong><br/>
 - GET "/post" - Returns all posts.<br/>
 - GET "/post/search" - Returns all posts that have the term passed by the request in their names.<br/>
