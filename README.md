@@ -78,6 +78,7 @@ npm start
     <summary><strong>🌐 API routes</strong></summary>
 
 > <strong>User Route</strong><br/>
+- POST "/login" - Sign a user and return a JWT token.
 - GET "/user" - Returns all users.<br/>
 - GET "/user/:id" - Returns the user that has the id passed by the request.<br/>
 - POST "/user" - Register a new user with the properties passed by the request.<br/>
