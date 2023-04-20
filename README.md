@@ -70,7 +70,6 @@ npm start
 ```
 
 </details>
-<br/>
 
 ## 🔎 Additional details
 
